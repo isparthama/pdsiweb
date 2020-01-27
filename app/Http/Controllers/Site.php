@@ -1,0 +1,197 @@
+<?php
+
+namespace App\Http\Controllers;
+
+
+use App\ModelMenuFront;
+use App\ModelContents;
+use App\Modelserahterima;
+use App\ModelInspeksi;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use \Chumper\Zipper\Facades\Zipper;
+use App\ModelSite;
+class Site extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $sql="select * from m_site";
+        $data['listdata']=DB::select($sql);
+        $data['content']="admin-user.site.list_form";
+        $data['judul']="List Site";
+        
+        Session::put('serahterima','');
+        Session::put('home','');
+        Session::put('inspeksi','');
+        Session::put('routing','');
+        Session::put('review','');
+        Session::put('produksi','');
+        Session::put('procurement','');
+        Session::put('realisasi','');
+        Session::put('inspeksitest','');
+        Session::put('petugas','');
+        Session::put('menu','');
+        Session::put('rolemenu','');
+        Session::put('jabatan','');
+        Session::put('pengerjaanulang','');
+        Session::put('manufacture','');
+        Session::put('finishing','');
+        Session::put('serahterimakeluar','');
+        
+         Session::put('site','class="current"');
+        Session::put('material','');
+        Session::put('mesin','');
+        Session::put('masterpersonil','');
+        Session::put('mail','');
+        Session::put('tools','');
+        return view('admin-user.templatepdsi',$data);
+    }
+    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $data['row']="";
+        $data['content']="admin-user.site.form_input";
+        $data['judul']="Form Site";
+        
+        Session::put('serahterima','');
+        Session::put('home','');
+        Session::put('inspeksi','');
+        Session::put('routing','');
+        Session::put('review','');
+        Session::put('produksi','');
+        Session::put('procurement','');
+        Session::put('realisasi','');
+        Session::put('inspeksitest','');
+        Session::put('petugas','');
+        Session::put('menu','');
+        Session::put('rolemenu','');
+        Session::put('jabatan','');
+        Session::put('pengerjaanulang','');
+        Session::put('manufacture','');
+        Session::put('finishing','');
+        Session::put('serahterimakeluar','');
+        
+         Session::put('site','class="current"');
+        Session::put('material','');
+        Session::put('mesin','');
+        Session::put('masterpersonil','');
+        Session::put('mail','');
+        Session::put('tools','');
+        $user=Auth::user();
+        return view('admin-user.templatepdsi',$data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if($request->ajax()){
+            $sql="insert into m_site (nama_site)values('".$request->nama_site."');";
+            DB::select($sql);
+            Session::put('alert-success','Data Berhasil Disimpan');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Site  $site
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Site  $site
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $data['row']=ModelSite::where('id',$id)->first();
+        $data['content']="admin-user.site.form_input";
+        $data['judul']="Form Site";
+        Session::put('serahterima','');
+        Session::put('home','');
+        Session::put('inspeksi','');
+        Session::put('routing','');
+        Session::put('review','');
+        Session::put('procurement','');
+        Session::put('realisasi','');
+        Session::put('produksi','');
+        Session::put('inspeksitest','');
+        Session::put('petugas','');
+        Session::put('menu','');
+        Session::put('rolemenu','');
+        Session::put('jabatan','');
+        Session::put('pengerjaanulang','');
+        Session::put('manufacture','');
+        Session::put('finishing','');
+        Session::put('serahterimakeluar','');
+        
+         Session::put('site','class="current"');
+        Session::put('material','');
+        Session::put('mesin','');
+        Session::put('masterpersonil','');
+        Session::put('mail','');
+        Session::put('tools','');
+        return view('admin-user.templatepdsi',$data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Site  $site
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        if($request->ajax()){
+            $sql="update m_site set nama_site='".$request->nama_site."' where id=".$request->id;
+            DB::select($sql);
+            Session::put('alert-success','Data Berhasil Diupdate');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Site  $site
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        ModelSite::where('id',$id)->delete();
+        Session::put('alert-success','Data Berhasil Dihapus');
+        return redirect('/admin-user/site-list/');
+    }
+    function listsite(){
+        $response['status'] = 'SUCCESS';
+        $response['code'] = 200;
+        $response['data'] = DB::select("select * from m_site");
+
+        return response()->json($response);
+    }
+}
