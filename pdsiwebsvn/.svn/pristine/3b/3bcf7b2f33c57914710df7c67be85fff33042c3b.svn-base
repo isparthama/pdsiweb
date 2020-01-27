@@ -1,0 +1,84 @@
+;
+<?php $__env->startSection('title'); ?>
+<h1>Daftar Pelatihan Kerja</h1>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+
+<script>
+    function jspelatihan(){
+        window.open('/backend-user/ikut-pelatihan-kerja/list','_self');
+    }
+
+    function openFile(file){
+        window.open(file, '_blank');
+    }
+</script>
+<?php if(Session::has('alert-success')): ?>
+    <div class="alert alert-success">
+        <strong><?php echo e(\Illuminate\Support\Facades\Session::get('alert-success')); ?></strong>
+    </div>
+<?php endif; ?>
+<button type="button" onclick="jspelatihan();" class="btn btn-info btn-xs waves-effect waves-light">History Pelatihan Kerja Anda</button>
+<div style="margin:15px; text-align:center;">
+    <div class="alert alert-success">Anda Hanya Dapat Mengikuti 1 Pelatihan Dalam 1 Tahun Anggaran</div>
+</div>
+<div class="table-responsive"> 
+<table id="example" class="table table-striped table-bordered display" style="width:100%">
+        <thead>
+                <tr>
+                        <th>No</th>
+                        <th>PPKD</th>
+                        <th>Kejuruan</th>
+                        <th>Tanggal Seleksi</th>
+                        <th>Tanggal Pelatihan</th>
+                        <th>Informasi</th>
+                        <th>Sisa Kuota</th>
+                        
+                        <th>Action</th>
+                        
+                </tr>
+        </thead>
+
+        <tbody>
+            <?php if(count($listdata) > 0): ?>
+
+                <?php $no=1; ?>
+                <?php $__currentLoopData = $listdata; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr>
+                            <td><?php echo e($no++); ?></td>
+                            <td><?php echo e($data->getPpkd->deskripsi); ?></td>
+                            <td><?php echo e($data->getKejuruan->deskripsi); ?></td>
+                            <td><?php echo e(date('d M Y', strtotime($data->seldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($data->seldate2))); ?></td>
+                            <td><?php echo e(date('d M Y', strtotime($data->peldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($data->peldate2))); ?></td>
+                            <td class="text-center">
+                                <?php if($data->informasi): ?>
+                                    <button class="btn-success btn btn-xs" onclick="openFile('<?php echo e($data->informasi); ?>')">Lihat File</button>
+                                <?php else: ?>
+                                    <button class="btn btn-xs btn-default" disabled>Belum Upload</button>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo e($data->sisakuota); ?> / <?php echo e($data->max_kuota); ?> Peserta</td>
+                            <td>
+                                <?php if($statusPendaftaran == true): ?>
+                                    <a href="ikut-pelatihan-kerja/daftar/<?php echo e(\Hashids::encode($data->id)); ?>" class=" btn btn-xs btn-primary">Daftar</a>
+                                <?php else: ?>  
+                                    <span class="label label-warning">Tidak Dapat Daftar</span>
+                                <?php endif; ?>
+                            </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php else: ?>
+                    <tr>
+                        <td colspan="10" style="text-align:center">Pelatihan Belum Tersedia Saat Ini</td>
+                    </tr>
+            <?php endif; ?>
+        </tbody>
+</table>
+</div>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('backend-user.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/backend-user/daftarpelatihan/daftarpelatihan.blade.php ENDPATH**/ ?>

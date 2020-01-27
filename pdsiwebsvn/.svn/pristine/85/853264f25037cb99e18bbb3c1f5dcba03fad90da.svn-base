@@ -1,0 +1,348 @@
+<?php
+//if($_SESSION['groupcode']==""){
+//    header("location:".base_url()."login");
+//}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+	
+	<title>Disnakertrans</title>
+        <!--<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"/>-->
+        <link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/styles/style.min.css">
+        <link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/fonts/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css">
+	<!-- Main Styles -->
+	
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/waves/waves.min.css">
+	
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/sweet-alert/sweetalert.css">
+	<!-- Remodal -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/modal/remodal/remodal.css">
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/modal/remodal/remodal-default-theme.css">
+        
+	<!-- Data Tables -->
+        
+        <style type="text/css">@import  url("<?php echo URL::to('/');?>/assets/plugin/datatables/media/css/dataTables.bootstrap.min.css");</style>
+	
+        <style type="text/css">@import  url("<?php echo URL::to('/');?>/assets/plugin/datatables/extensions/Responsive/css/responsive.bootstrap.min.css");</style>
+	
+        <!-- Touch Spin -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/touchspin/jquery.bootstrap-touchspin.min.css">
+        
+	<!-- Colorpicker -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/colorpicker/css/bootstrap-colorpicker.min.css">
+
+	<!-- Datepicker -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/datepicker/css/bootstrap-datepicker.min.css">
+        <!-- DateRangepicker -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/daterangepicker/daterangepicker.css">
+        
+        <!-- Jquery UI -->
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/jquery-ui/jquery-ui.structure.min.css">
+	<link rel="stylesheet" href="<?php echo e(URL::to('/')); ?>/assets/plugin/jquery-ui/jquery-ui.theme.min.css">
+        
+</head>
+
+<body>
+<div class="main-menu">
+	<header class="header">
+		<a href="index.html" class="logo">
+                    <img href="<?php echo e(URL::to('/')); ?>/img/logodki.png" alt="" title="" />
+                </a>
+		<button type="button" class="button-close fa fa-times js__menu_close"></button>
+	</header>
+	<!-- /.header -->
+	<div class="content">
+
+		<div class="navigation">
+			
+			<ul class="menu js__accordion">
+                                <li>
+					
+				</li>
+                                <?php
+                                // menu pencari kerja
+                                if(Session::get('role')=='pencari_kerja'){
+                                    echo '
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/"><i class="menu-icon fa fa-home"></i><span>Home</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/profile-user"><i class="menu-icon fa fa-user"></i><span>Profil Anda</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/daftarpelamar"><i class="menu-icon fa fa-file"></i><span>Daftar Lamaran</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/ikut-pelatihan-kerja"><i class="menu-icon fa fa-file"></i><span>Daftar Pelatihan Kerja</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/pengaduan"><i class="menu-icon fa fa-bullhorn"></i><span>Pengaduan</span></a>
+                                        </li>
+                                        
+                                        ';
+                                    
+                                }else{
+                                    echo '
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/"><i class="menu-icon fa fa-home"></i><span>Home</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/backend-user/profile-company"><i class="menu-icon fa fa-building"></i><span>Profil Perusahaan</span></a>
+                                        </li>
+                                        <li>
+                                                <a class="waves-effect" href="/lowongankerja"><i class="menu-icon fa fa-book"></i><span>Lowongan Kerja</span></a>
+                                        </li>
+                                        ';
+                                    
+                                }
+                                ?>
+                                
+				
+			
+			</ul>
+			<!-- /.menu js__accordion -->
+		</div>
+		<!-- /.navigation -->
+	</div>
+	<!-- /.content -->
+</div>
+<!-- /.main-menu -->
+
+<div class="fixed-navbar">
+	<div class="pull-left">
+		<button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+		<h1 class="page-title">Halaman Administrasi Disnakertrans DKI Jakarta</h1>
+		<!-- /.page-title -->
+	</div>
+	<!-- /.pull-left -->
+	<div class="pull-right">
+                <div class="ico-item">
+			<i class="ti-user"></i> <?php echo e(Session::get('nama')); ?>
+
+			<ul class="sub-ico-item">
+                                <li><a  href="#"  data-toggle="modal" data-target="#boostrapModal-2">Ganti Password</a></li>
+                                <li><a  href="#" onclick="jvlogout();">Log Out</a></li>
+                                
+			</ul>
+		
+		</div>
+	</div>
+        <script>
+            function jvlogout(){
+                window.open('<?php echo URL::to('/');?>/logout-user','_self');
+            }
+        </script>
+	<!-- /.pull-right -->
+</div>
+
+        <script src="<?php echo e(URL::to('/')); ?>/assets/scripts/jquery.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/scripts/modernizr.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/nprogress/nprogress.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/sweet-alert/sweetalert.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/waves/waves.min.js"></script>
+	<!-- Sparkline Chart -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/chart/sparkline/jquery.sparkline.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/scripts/chart.sparkline.init.min.js"></script>
+
+	<!-- Flex Datalist -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<!-- Popover -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/popover/jquery.popSelect.min.js"></script>
+
+	<!-- Select2 -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/select2/js/select2.min.js"></script>
+
+	<!-- Multi Select -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/multiselect/multiselect.min.js"></script>
+
+	<!-- Touch Spin -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+
+	<!-- Timepicker -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/timepicker/bootstrap-timepicker.min.js"></script>
+
+	<!-- Colorpicker -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/colorpicker/js/bootstrap-colorpicker.min.js"></script>
+
+	<!-- Datepicker -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
+
+	<!-- Moment -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/moment/moment.js"></script>
+
+	<!-- DateRangepicker -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/daterangepicker/daterangepicker.js"></script>
+
+	<!-- Maxlength -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/maxlength/bootstrap-maxlength.min.js"></script>
+
+	<!-- Demo Scripts -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/scripts/form.demo.min.js"></script>
+
+        <!-- Jquery UI -->
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/jquery-ui/jquery-ui.min.js"></script>
+	<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/jquery-ui/jquery.ui.touch-punch.min.js"></script>
+        
+	<script src="<?php echo e(URL::to('/')); ?>/assets/scripts/main.min.js"></script>
+        
+        <script src="<?php echo e(URL::to('/')); ?>/assets/plugin/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/datatables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/editable-table/mindmup-editabletable.js"></script>
+<script src="<?php echo e(URL::to('/')); ?>/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js"></script>
+<script src="<?php echo e(URL::to('/')); ?>/assets/scripts/datatables.demo.min.js"></script>
+
+
+
+
+        
+     <script>
+$('#kis_updating').DataTable({
+    "searching": true,
+    "processing": true
+});    
+</script>   
+
+<!-- /#message-popup -->
+<div id="wrapper">
+	<div class="main-content">
+		<div class="row small-spacing">
+			<div class="col-xs-12">
+                            
+				<div class="box-content">
+                                    
+					<h4 class="box-title">
+                                            <?php echo $__env->yieldContent('title'); ?> 
+                                        </h4>
+                                        <script type="text/javascript" src="<?php echo e(URL::to('/')); ?>/disini/jquery.js"></script>
+                                        <script type="text/javascript" src="<?php echo e(URL::to('/')); ?>/disini/bootstrap/js/bootstrap.min.js"></script>
+                                        <script type="text/javascript" src="<?php echo e(URL::to('/')); ?>/disini/datatables/media/js/jquery.dataTables.min.js"></script>
+                                        <script type="text/javascript" src="<?php echo e(URL::to('/')); ?>/disini/datatables/media/js/dataTables.bootstrap.min.js"></script>
+                                        <script src="<?php echo e(URL::to('/')); ?>/js/jquery.form.js"></script>
+                                        <?php echo $__env->yieldContent('content'); ?>
+                                        
+                                    
+                                        
+                        
+				</div>
+				<!-- /.box-content -->
+			</div>
+			
+		</div>
+		<!-- /.row small-spacing -->		
+		<footer class="footer">
+			<ul class="list-inline">
+				<li><?php echo e(date('Y')); ?> © Disnakertrans DKI Jakarta.</li>
+			</ul>
+		</footer>
+	</div>
+
+</div>
+        
+	
+      
+    <script>
+    $('#namadiklat').val('');    
+    
+    </script>
+<div class="modal fade"  id="boostrapModal-2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Form Ganti Password</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+                                        <label for="inputName" class="control-label">Password Lama  </label>
+                                        <input type="password" onblur="cekpasslama();" class="form-control" id="passlama" name="passlama"  placeholder="Masukan Password Lama ..."  required >
+                                </div>
+                                <div class="form-group">
+                                        <label for="inputName" class="control-label">Password Baru  </label>
+                                        <input type="password" class="form-control" id="passbaru" name="passbaru"  placeholder="Masukan Password Baru ..." required >
+                                </div>
+                                <div class="form-group">
+                                        <label for="inputName" class="control-label">Confirm Password Baru  </label>
+                                        <input type="password" class="form-control" onblur="confpassbaru();" id="confpassbaru" name="confpassbaru"  placeholder="Masukan Password Baru ..."  required >
+                                </div>
+                                
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Close</button>
+                                        <button type="button" onclick="savepass();" class="btn btn-primary btn-sm waves-effect waves-light"  data-dismiss="modal">Update Password</button>
+                                </div>
+                            <script>
+                            function cekpasslama(){
+                                var param={}; 
+                               param['passlama']=$('#passlama').val();
+                                $.post('login/cekpass',param,function(data){
+                                    if($.trim(data)=='0H'){
+                                        $('#passlama').val('');
+                                        alert('Password anda salah');return false;
+                                    }
+                                });
+                            }
+                            function savepass(){
+                                var param={};
+                                if($('#passlama').val()==''){
+                                    alert('Password lama harus diisi');return false;
+                                }
+                                if($('#passbaru').val()==''){
+                                    alert('Password baru harus diisi');return false;
+                                }
+                                if($('#confpassbaru').val()==''){
+                                    alert('Password baru harus diisi');return false;
+                                }
+                                
+                                if($('#passbaru').val()!=$('#confpassbaru').val()){
+                                    $('#confpassbaru').val('');
+                                    alert('Confirm Password anda tidak sama!!');return false;
+                                    
+                                }
+                                param['confpassbaru']=$('#confpassbaru').val();
+                                $.post('login/savepass',param,function(data){
+                                    alert('Password telah terupdate');
+                                });
+                            }
+                            function confpassbaru(){
+                                if($('#passbaru').val()!=$('#confpassbaru').val()){
+                                    $('#confpassbaru').val('');
+                                    alert('Confirm Password anda tidak sama!!');return false;
+                                    
+                                }
+                            }
+                            
+                            </script>
+                        </div>
+                </div>
+        </div>
+</div>
+
+</body>
+<div class="modal fade" id="boostrapModal-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, sunt tempora, aspernatur reprehenderit expedita maxime assumenda molestiae id minus libero soluta? Ex sapiente cum perspiciatis rem deserunt molestias perferendis eum.</p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate impedit perspiciatis quae et consequuntur fugiat nostrum rem officiis omnis quo, assumenda maxime, praesentium quas, dolore ipsum. Cum nesciunt, maxime tempora.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Save changes</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+<!-- Mirrored from demo.ninjateam.org/html/spaceX/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 08 Aug 2017 15:39:03 GMT -->
+</html><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/template.blade.php ENDPATH**/ ?>

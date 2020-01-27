@@ -1,0 +1,122 @@
+;
+<?php $__env->startSection('title'); ?>
+<h1>Master List Pelatihan</h1>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+
+<script>
+    function jstambah(){
+        window.open('/admin-user/pelatihan-kerja/create','_self');
+    }
+    
+    function openFile(file){
+        window.open(file, '_blank');
+    }
+</script>
+
+<?php if(Session::has('alert-success')): ?>
+    <div class="alert alert-success">
+        <strong><?php echo e(\Illuminate\Support\Facades\Session::get('alert-success')); ?></strong>
+    </div>
+<?php endif; ?>
+<button type="button" onclick="jstambah();" class="btn btn-info btn-xs waves-effect waves-light">Tambah Data</button>
+<br>
+<br>
+<div class="table-responsive"> 
+<table id="example" class="table table-striped table-bordered display" style="width:100%">
+        <thead>
+                <tr>
+                        <th>No</th>
+                        <th>PPKD</th>
+                        <th>Kejuruan</th>
+                        <th>Tahun</th>
+                        <th>Angkatan</th>
+                        <th>Tanggal Seleksi</th>
+                        <th>Tanggal Pelatihan</th>
+                        <th>Peserta</th>
+                        <th>Status</th>
+                        <th>Informasi</th>
+                        
+                        <th>Action</th>
+                        
+                </tr>
+        </thead>
+
+        <tbody>
+            <?php if(count($listdata) > 0): ?>
+
+                <?php $no=1; ?>
+                <?php $__currentLoopData = $listdata; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr>
+                            <td><?php echo e($no++); ?></td>
+                            <td><?php echo e($data->getPpkd->deskripsi); ?></td>
+                            <td><?php echo e($data->getKejuruan->deskripsi); ?></td>
+                            <td><?php echo e($data->tahun); ?></td>
+                            <td><?php echo e($data->angkatan); ?></td>
+                            <td><?php echo e(date('d M Y', strtotime($data->seldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($data->seldate2))); ?></td>
+                            <td><?php echo e(date('d M Y', strtotime($data->peldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($data->peldate2))); ?></td>
+                            <td><?php echo e($data->sisakuota); ?> / <?php echo e($data->max_kuota); ?></td>
+                            <td class="text-center" style="padding-top:15px;">
+                                <?php if($data->publik==0): ?>
+                                    <span class="label label-default" style="margin-top:15px;">Tidak Aktif</span>
+                                <?php else: ?>
+                                    <span class="label label-success" style="margin-top:15px;">Aktif</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if($data->informasi): ?>
+                                    <button class="btn-info btn btn-xs" onclick="openFile('<?php echo e($data->informasi); ?>')">Lihat File</button>
+                                <?php else: ?>
+                                    <button class="btn btn-xs btn-default" disabled>Belum Upload</button>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+
+                            <?php
+                            $statusClass = "";
+                            $statusBtn = "";
+                            if($data->publik==0){
+                                $statusClass="btn btn-xs btn-success";
+                                $statusBtn = "Aktifkan";
+                            }else{
+                                $statusClass="btn btn-xs btn-warning";
+                                $statusBtn = "Matikan";
+                            }
+                            ?>
+                                <a href="edit/<?php echo e(\Hashids::encode($data->id)); ?>" class="btn btn-xs btn-primary" style="margin:2px;">Ubah</a>
+                                <a href="aktif/<?php echo e(\Hashids::encode($data->id)); ?>" class="<?php echo e($statusClass); ?>" style="margin:2px;"><?php echo e($statusBtn); ?></a>
+                                <a href="list/detail/<?php echo e(\Hashids::encode($data->id)); ?>" class="btn btn-xs btn-dark" style="margin:2px;">Detail</a>
+                            <form action="<?php echo e(url('pelatihan-kerja/delete/'.\Hashids::encode($data->id))); ?>" method="get">
+                                <?php echo e(csrf_field()); ?>
+
+                                <button class="btn btn-xs btn-danger" type="submit" style="margin:2px;" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                            </form>
+                            </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php else: ?>
+                    <tr>
+                        <td colspan="10" style="text-align:center">Empty Data</td>
+                    </tr>
+            <?php endif; ?>
+        </tbody>
+</table>
+</div>
+
+<script>
+function editAction(id){
+    $.ajax({
+        url: '/admin-user/pelatihan-kerja/edit',
+        type: "POST",
+        data: {"_token": "<?php echo e(csrf_token()); ?>", "id": id},
+        success: function(data){
+            alert(data.status);
+        }
+    });
+}
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin-user.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/admin-user/pelatihan/listdata.blade.php ENDPATH**/ ?>

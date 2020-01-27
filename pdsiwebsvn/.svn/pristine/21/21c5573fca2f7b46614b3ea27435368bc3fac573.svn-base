@@ -1,0 +1,41 @@
+;
+<?php $__env->startSection('title'); ?>
+<h1><?php echo e($judul); ?></h1>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<br>
+<br>
+
+        <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="box-content bg-success text-white">
+                        <div class="statistics-box with-icon">
+                                <i class="ico small fa fa-diamond"></i>
+                                <p class="text text-white">JUMLAH CONFIRM</p>
+                                <h2 class="counter">15</h2>
+                        </div>
+                </div>
+
+                <!-- /.box-content -->
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="box-content bg-info text-white">
+                        <div class="statistics-box with-icon">
+                                <i class="ico small fa fa-archive"></i>
+                                <p class="text text-white">JUMLAH LAMARAN</p>
+                                <h2 class="counter">20</h2>
+                        </div>
+                </div>
+                <!-- /.box-content -->
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+                <div class="box-content bg-warning text-white">
+                        <div class="statistics-box with-icon">
+                                <i class="ico small fa fa-bookmark"></i>
+                                <p class="text text-white">JUMLAH PELATIHAN KERJA</p>
+                                <h2 class="counter">25</h2>
+                        </div>
+                </div>
+                <!-- /.box-content -->
+        </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin-user.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/admin-user/content_home.blade.php ENDPATH**/ ?>

@@ -1,0 +1,230 @@
+
+<br>
+<br>
+<div class="row small-spacing">
+			<div class="col-md-3 col-xs-12">
+				<div class="box-content bordered primary margin-bottom-20">
+					<div class="profile-avatar">
+						<?php if($data->picture): ?>
+							<img src="<?php echo e(URL::to('/')); ?><?php echo e($data->picture); ?>"  />
+						<?php else: ?>
+							<img src="<?php echo e(asset('/assets/images/profile-default.png')); ?>" alt="">
+						<?php endif; ?>
+					<h3><strong><?php echo e($data->fullname); ?></strong></h3>
+					<a href="edit-user/<?php echo e(\Hashids::encode($data->id)); ?>" class="btn btn-block btn-friend"><i class="fa fa-edit"></i> Edit Profile</a>
+						
+					</div>
+					<!-- .profile-avatar -->
+					<table class="table table-hover no-margin">
+						<tbody>
+							<tr>
+								<td>Status</td>
+								<td><?php echo e($data->status_kawin==1?'Menikah':'Belum'); ?></td>
+							</tr>
+							<tr>
+								<td>Jenis Kelamin</td>
+								<td><?php echo e($data->jenis_kelamin==1?'Laki-laki':'Perempuan'); ?></td>
+							</tr>
+							<tr>
+								<td>Usia</td>
+								<td><?php echo e($data->usia?$data->usia:'-'); ?></td>
+							</tr>
+							<tr>
+								<td>Daftar Sejak</td>
+								<td><?php echo e($data->created_at?$data->created_at:'-'); ?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-content bordered -->
+
+				
+				<!-- /.box-content -->
+			</div>
+			<!-- /.col-md-3 col-xs-12 -->
+			<div class="col-md-9 col-xs-12">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box-content card">
+							<h4 class="box-title"><i class="fa fa-user ico"></i>About</h4>
+							<!-- /.box-title -->
+							<div class="dropdown js__drop_down">
+								<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
+								
+								<!-- /.sub-menu -->
+							</div>
+							<!-- /.dropdown js__dropdown -->
+							<div class="card-content">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-xs-5"><label>NIK:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e($data->username); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>No Telp:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e($data->notlp); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Tanggal Lahir:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e($data->ttl); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Minimum Gaji:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><a href="#">Rp.<?php echo e($data->gaji); ?></a></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Minat Profesi:</label></div>
+											<?php $profesi_arr = json_decode( $data->profesi, true ) ?>
+											<?php $__currentLoopData = $profesi_arr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												<!-- /.col-xs-5 -->
+												<div class="col-xs-7"><a href="#"><?php echo e($item['name']); ?></a></div>
+												<!-- /.col-xs-7 -->
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Website:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><a href="#"><?php echo e($data->website); ?></a></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+									</div>
+									<div class="col-md-6">
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Nama:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e($data->fullname); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Email:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e($data->email); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+										<!-- /.row -->
+										<div class="row">
+											<div class="col-xs-5"><label>Alamat:</label></div>
+											<!-- /.col-xs-5 -->
+											<div class="col-xs-7"><?php echo e(strtoupper($data->alamat_full)); ?></div>
+											<!-- /.col-xs-7 -->
+										</div>
+									</div>
+									<!-- /.col-md-6 -->
+								</div>
+								<!-- /.row -->
+							</div>
+							<!-- /.card-content -->
+						</div>
+						<!-- /.box-content card -->
+					</div>
+					<!-- /.col-md-12 -->
+					
+					<!-- /.col-md-6 -->
+					<div class="col-md-12 col-xs-12">
+						<div class="box-content card">
+							<h4 class="box-title"><i class="fa fa-trophy ico"></i> Pendidikan</h4>
+							<!-- /.box-title -->
+							<div class="dropdown js__drop_down">
+								<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
+								
+								<!-- /.sub-menu -->
+							</div>
+							<?php $pendidikan_arr = json_decode( $data->pendidikan, true ) ?>
+							<?php $__currentLoopData = $pendidikan_arr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							
+								<!-- /.dropdown js__dropdown -->
+								<div class="card-content">
+									<ul class="dot-list">
+										<li><a href="#"><?php echo e($item['name']); ?></a> di <a href="#"><?php echo e($item['desc']); ?></a>.<span class="date">lulus pada tahun <?php echo e($item['tahun']); ?></span></li>
+									</ul>
+								</div>
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							<!-- /.card-content -->
+						</div>
+						<!-- /.box-content card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<div class="row">
+						<!-- /.col-md-6 -->
+                                        <div class="col-md-6 col-xs-12">
+						<div class="box-content card">
+							<h4 class="box-title"><i class="fa fa-file-text ico"></i> Pengalaman</h4>
+							<!-- /.box-title -->
+							<div class="dropdown js__drop_down">
+								<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
+								<!-- /.sub-menu -->
+							</div>
+							<!-- /.dropdown js__dropdown -->
+							<div class="card-content">
+								<ul class="dot-list">
+									<li><a href="#">Operator</a> at <a href="#">PT angkasa</a>.<span class="date">March 2013 ~ Sekarang</span></li>
+									
+								</ul>
+							</div>
+							<!-- /.card-content -->
+						</div>
+						<!-- /.box-content card -->
+					</div>
+					<div class="col-md-6 col-xs-12">
+						<div class="box-content card">
+							<h4 class="box-title"><i class="fa fa-flask ico"></i> Skill</h4>
+							<!-- /.box-title -->
+							<div class="dropdown js__drop_down">
+								<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
+								
+								<!-- /.sub-menu -->
+							</div>
+							<?php $skill_arr = json_decode( $data->skill, true ) ?>
+							<?php $__currentLoopData = $skill_arr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<?php
+								if ($item['rating'] == 'excellent') {
+									$valSkill = 100;
+								} elseif ($item['rating'] == 'good') {
+									$valSkill = 75;
+								} elseif ($item['rating'] == 'average') {
+									$valSkill = 50;
+								} elseif ($item['rating'] == 'weak') {
+									$valSkill = 25;
+								} elseif ($item['rating'] == 'bad') {
+									$valSkill = 0;
+								}
+							?>
+								<!-- /.dropdown js__dropdown -->
+								<div class="card-content">
+									<p><?php echo e(strtoupper($item['name'])); ?></p>
+									<div class="progress">
+									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo e($valSkill); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo e($valSkill); ?>%">
+											<span class="sr-only"><?php echo e($valSkill); ?>% Complete (success)</span>
+										</div>
+									</div>
+								</div>
+								<!-- /.card-content -->
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						</div>
+						<!-- /.box-content card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.col-md-9 col-xs-12 -->
+		</div>
+<?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/backend-user/profile/form_profil.blade.php ENDPATH**/ ?>

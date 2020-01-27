@@ -1,0 +1,156 @@
+<?php $__env->startSection('title'); ?>
+<h1><?php echo e($listdata['judul']); ?></h1>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+
+<script>
+    function jsback(){
+        // window.open('/admin-user/pelatihan-kerja/listdata','_self');
+        window.history.back();
+    }
+    function ajaxRequest(status,id){
+        console.log(status);
+        $.ajax({
+            type: 'POST',
+            url: '/admin-user/pelatihan-kerja/proses',
+            data: { "_token": "<?php echo e(csrf_token()); ?>", "status": status, "id": id},
+            success:function(data) {
+                if(data == 'error'){
+                    alert('terjadi kesalahan');
+                }
+            }
+        });
+    }
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="boostrapModal-1" tabindex="1000" role="dialog" aria-labelledby="myModalLabel" style="z-index: 9999;">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Detail CV Peserta</h4>
+			</div>
+			<div class="modal-body" style="margin-bottom:280px;">
+                <div class="col-md-6" style="margin-top:10px;">
+                    <p><strong>PPKD : </strong><span id="ppkd_p"></span></p>
+                    <p><strong>KODE PPKD : </strong><span id="ppkd_kode_p"></span></p>
+                    <p><strong>NAMA : </strong><span id="nama_p"></span></p>
+                    <p><strong>NIK : </strong><span id="nik_p"></span></p>
+                    <p><strong>STATUS : </strong><span id="kawin_p"></span></p>
+                    <p><strong>TTL : </strong><span id="ttl_p"></span></p>
+                    <p><strong>PENDIDIKAN : </strong><span id="pendidikan_p"></span></p>
+                    <p><strong>MINAT PROFESI : </strong><span id="profesi_p"></span></p>
+                    <p><strong>SKILL : </strong><span id="skill_p"></span></p>
+                </div>
+                <div class="col-md-6" style="margin-top:10px;">
+                    <p><strong>KEJURUAN : </strong><span id="kejuruan_p"></span></p>
+                    <p><strong>NOMOR REGISTRASI : </strong><span id="noreg_p"></span></p>
+                    <p><strong>EMAIL : </strong><span id="email_p"></span></p>
+                    <p><strong>NO TELP : </strong><span id="tlp_p"></span></p>
+                    <p><strong>USIA : </strong><span id="usia_p"></span></p>
+                    <p><strong>ALAMAT : </strong><span id="alamat_p"></span></p>
+                    <p><strong>KODEPOS : </strong><span id="kodepos_p"></span></p>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm waves-effect waves-light">Tolak</button>
+				<button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Lolos</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+        <?php $__currentLoopData = $listdata['kelas']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="col-md-6">
+            <p><strong>PPKD :</strong> <?php echo e($v->ppkd_desc); ?></p>
+            <p><strong>KEJURUAN :</strong> <?php echo e($v->kejuruan_desc); ?></p>
+            <p><strong>TAHUN :</strong> <?php echo e($v->tahun); ?> / <strong>ANGKATAN :</strong> <?php echo e($v->angkatan); ?></p>
+        <button type="button" onclick="jsback();" class="btn btn-warning btn-xs waves-effect waves-light" style="margin-top:10px;">Kembali</button>
+        </div>
+        <div class="col-md-6">
+            <p><strong>TANGGAL SELEKSI :</strong> <?php echo e(date('d M Y', strtotime($v->seldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($v->seldate2))); ?></p>
+            <p><strong>TANGGAL PELATIHAN :</strong> <?php echo e(date('d M Y', strtotime($v->peldate1))); ?> s/d <?php echo e(date('d M Y', strtotime($v->peldate2))); ?></p>
+            <p><strong>KUOTA :</strong> <?php echo e($v->sisakuota); ?>/<?php echo e($v->max_kuota); ?></p>
+        </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
+</div>
+<br>
+<div class="row">
+<div class="table-responsive"> 
+<table id="example" class="table table-striped table-bordered display" style="width:100%">
+        <thead>
+                <tr>
+                        <th>No</th>
+                        <th>Noreg</th>
+                        <th>Nourut</th>
+                        <th>Nama</th>
+                        <th>NIK</th>
+                        <th>Email</th>
+                        <th>Telp</th>
+                        <th>Tujuan</th>
+                        <th>Action</th>
+                        
+                </tr>
+        </thead>
+
+        <tbody>
+            <?php if(count($listdata['detail']) > 0): ?>
+
+                <?php $no=1; ?>
+                <?php $__currentLoopData = $listdata['detail']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                
+                    <tr>
+                            <td><?php echo e($no++); ?></td>
+                            <td><?php echo e($data->no_registrasi); ?></td>
+                            <td><?php echo e($data->no_urut); ?></td>
+                            <td><?php echo e($data->name); ?></td>
+                            <td><?php echo e($data->nik); ?></td>
+                            <td><?php echo e($data->email); ?></td>
+                            <td><?php echo e($data->no_telp1); ?></td>
+                            <td><?php echo e(json_decode($data->goal_peserta)->tujuan); ?></td>
+                            <td>
+                                <?php if($listdata['status'] == 'seleksi' && $data->status == 'registrasi'): ?>
+                                    <a href="/admin-user/pelatihan-kerja/detail-users/<?php echo e(\Hashids::encode($data->user_id)); ?>/<?php echo e(\Hashids::encode($data->id)); ?>" target="_blank" class="btn btn-xs btn-info" style="margin-top:5px;">Lihat</a>
+                                    <button href="#" onclick="ajaxRequest('lolos',<?php echo e($data->id); ?>)" class="btn btn-xs btn-success" style="margin-top:5px;">Lolos</button>
+                                    <button href="#" onclick="ajaxRequest('tolak',<?php echo e($data->id); ?>)" class="btn btn-xs btn-danger" style="margin-top:5px;">Tolak</button>
+                                <?php elseif($listdata['status'] == 'penilaian' && $data->status == 'lolos seleksi'): ?>
+                                    <a href="/admin-user/pelatihan-kerja/detail-users/<?php echo e(\Hashids::encode($data->user_id)); ?>/<?php echo e(\Hashids::encode($data->id)); ?>" target="_blank" class="btn btn-xs btn-info" style="margin-top:5px;">Lihat</a>
+                                    <button href="#" onclick="ajaxRequest('lulus',<?php echo e($data->id); ?>)" class="btn btn-xs btn-success" style="margin-top:5px;">Lulus</button>
+                                    <button href="#" onclick="ajaxRequest('gagal',<?php echo e($data->id); ?>)" class="btn btn-xs btn-danger" style="margin-top:5px;">Tidak</button>
+                                <?php elseif($listdata['status'] == 'penilaian' && $data->status == 'lulus'): ?>
+                                    <button href="#" class="btn btn-xs btn-success" disabled style="margin-top:5px;">Lulus</button>
+                                <?php elseif($listdata['status'] == 'penilaian' && $data->status == 'tidak lulus'): ?>
+                                    <button href="#" class="btn btn-xs btn-danger" disabled style="margin-top:5px;">Tidak Lulus</button>
+                                <?php elseif($listdata['status'] == 'seleksi' && $data->status == 'lolos seleksi'): ?>
+                                <a href="/admin-user/pelatihan-kerja/detail-users/<?php echo e(\Hashids::encode($data->user_id)); ?>/<?php echo e(\Hashids::encode($data->id)); ?>" target="_blank" class="btn btn-xs btn-info" style="margin-top:5px;">Lihat</a>
+                                    <button href="#" class="btn btn-xs btn-dark" disabled style="margin-top:5px;">Lolos Seleksi</button>
+                                <?php elseif($listdata['status'] == 'seleksi' && $data->status == 'tolak seleksi'): ?>
+                                <a href="/admin-user/pelatihan-kerja/detail-users/<?php echo e(\Hashids::encode($data->user_id)); ?>/<?php echo e(\Hashids::encode($data->id)); ?>" target="_blank" class="btn btn-xs btn-info" style="margin-top:5px;">Lihat</a>
+                                    <button href="#" class="btn btn-xs btn-dark" disabled style="margin-top:5px;">Gagal Seleksi</button>
+                                <?php else: ?>
+                                    <a href="/admin-user/pelatihan-kerja/detail-users/<?php echo e(\Hashids::encode($data->user_id)); ?>/<?php echo e(\Hashids::encode($data->id)); ?>" target="_blank" class="btn btn-xs btn-info" style="margin-top:5px;">Lihat</a>
+                                <?php endif; ?>
+                            </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php else: ?>
+                    <tr>
+                        <td colspan="10" style="text-align:center">Empty Data</td>
+                    </tr>
+            <?php endif; ?>
+        </tbody>
+</table>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin-user.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/portal2/resources/views/admin-user/pelatihan/detail.blade.php ENDPATH**/ ?>

@@ -1,0 +1,134 @@
+.font-robo {
+  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+.font-sans {
+  font-family: 'Open San', sans-serif;
+}
+
+@font-face{
+	font-family:'OpenSans';
+	src:url('../../fonts/OpenSans-Regular-webfont.eot?v=4.2');
+	src:url('../../fonts/OpenSans-Regular-webfont.eot?#iefix&v=4.2') format('embedded-opentype'),
+		url('../../fonts/OpenSans-Regular-webfont.svg#fontawesomeregular?v=4.2') format('svg'),
+	    url('../../fonts/OpenSans-Regular-webfont.woff?v=4.2') format('woff'),
+	    url('../../fonts/OpenSans-Regular-webfont.ttf?v=4.2') format('truetype');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+   font-family: 'Merienda-Regular';
+   src: url(../../fonts/Merienda-Regular.ttf)format('truetype');
+}
+@font-face {
+   font-family: 'Raleway-Regular';
+   src: url(../../fonts/Raleway-Regular.ttf)format('truetype');
+}
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url(../../fonts/Roboto-Regular.ttf) format('truetype');
+}
+  body {
+    background: #fff;
+    font-family: 'Open San', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+  }
+
+
+
+@media only screen and (max-width: 960px) {
+			#tableku td:nth-child(1),
+			#tableku th:nth-child(1) {display: none;}
+		}
+ 
+		@media only screen and (max-width: 640px) {
+			#tableku td:nth-child(4),
+			#tableku th:nth-child(4),
+			#tableku td:nth-child(7),
+			#tableku th:nth-child(7),
+			#tableku td:nth-child(8),
+			#tableku th:nth-child(8){display: none;}
+		}
+		
+/* CSS MODEL 2 */		
+
+		@media only screen and (max-width: 960px) {
+			#tableku2 .cf:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+			#tableku2 * html .cf { zoom: 1; }
+			#tableku2 *:first-child+html .cf { zoom: 1; }
+			#tableku2 { width: 100%; border-collapse: collapse; border-spacing: 0; }
+				 
+			#tableku2 th,
+			#tableku2 td { margin: 0; vertical-align: top; }
+			#tableku2 th { text-align: left; }
+			#tableku2 { display: block; position: relative; width: 100%; }
+			#tableku2 thead { display: block; float: left; }
+			#tableku2 tbody { display: block; width: auto; position: relative; overflow-x: auto; white-space: nowrap; }
+			#tableku2 thead tr { display: block; }
+			#tableku2 th { display: block; text-align: right; }
+			#tableku2 tbody tr { display: inline-block; vertical-align: top; }
+			#tableku2 td { display: block; min-height: 1.25em; text-align: left; }
+				 
+				 
+			/* sort out borders */
+			 
+			#tableku2 th { border-bottom: 0; border-left: 0; }
+			#tableku2 td { border-left: 0; border-right: 0; border-bottom: 0; }
+			#tableku2 tbody tr { border-left: 1px solid #babcbf; }
+			#tableku2 th:last-child,
+			#tableku2 td:last-child { border-bottom: 1px solid #babcbf; }
+		}		
+		
+		
+/* CSS MODEL 3 */			
+	@media only screen and (max-width: 960px) {
+		/* Force table to not be like tables anymore */
+		#no-more-tables table,
+		#no-more-tables thead,
+		#no-more-tables tbody,
+		#no-more-tables th,
+		#no-more-tables td,
+		#no-more-tables tr {
+		display: block;
+		}
+		/* Hide table headers (but not display: none;, for accessibility) */
+		#no-more-tables thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+		}
+		#no-more-tables tr { border: 1px solid #ccc; }
+		#no-more-tables td {
+		/* Behave like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 50%;
+		white-space: normal;
+		text-align:left;
+		}
+		#no-more-tables td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+		}
+		/*
+		Label the data
+		*/
+		#no-more-tables td:before { content: attr(data-title); }
+}
+			
+
