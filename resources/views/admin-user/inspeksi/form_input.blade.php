@@ -3,10 +3,10 @@
             
             $('.form1').ajaxForm({
                 beforeSubmit: function() {
-                    $('#submit').prop('disabled', true);
+                    //$('#submit').prop('disabled', true);
                 },
                 complete: function(xhr) {
-                    alert('Data Telah terupdate');
+                    //alert('Data Telah terupdate');
                     
                     $('#submit').prop('disabled', false);
                     //window.open('{{ URL::to('/') }}/admin-user/inspeksi-list/0','_self');
